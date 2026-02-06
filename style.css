@@ -1,0 +1,264 @@
+/* ===== Base ===== */
+body {
+  font-family: "JetBrains Mono", "Fira Mono", "Source Code Pro", monospace;
+  background: #fafafa;
+  color: #111;
+  max-width: auto;
+  margin: 1em auto;
+  padding: 0 1.2em;
+  line-height: 1.45;
+  font-size: 14px;
+}
+
+/* ===== Header ===== */
+header.top {
+  border-bottom: 1px solid #bbb;
+  padding-bottom: 0.4em;
+  margin-bottom: 1em;
+}
+
+header.top h1 {
+  margin: 0 0 0.2em 0;
+}
+
+.subtitle {
+  margin: 0;
+  font-size: 0.85em;
+  color: #555;
+}
+
+/* ===== Layout ===== */
+.layout {
+  display: grid;
+  grid-template-columns: 175px 1fr;
+  gap: 1.2em;
+}
+
+/* ===== Left column ===== */
+.left {
+  font-size: 0.95em;
+  border-right: 1px solid #bbb;
+  padding-right: 0.6em;
+  text-align: left;
+}
+
+.left h2 {
+  margin-top: 0;
+  text-align: left;
+}
+
+.left p,
+.left ul {
+  text-align: left;
+}
+
+/* ===== Right column ===== */
+.right h2:first-child {
+  margin-top: 0;
+}
+
+/* ===== Tab System (Pure CSS) ===== */
+/* Hide radio inputs */
+input[type="radio"][name="tabs"] {
+  display: none;
+}
+
+/* Tab Navigation */
+.tabs {
+  border-bottom: 1px solid #ccc;
+  margin-bottom: 1em;
+  padding-bottom: 0.3em;
+}
+
+.tab-link {
+  display: inline-block;
+  margin-right: 1em;
+  padding-bottom: 0.2em;
+  color: #666;
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+  transition: all 0.2s;
+}
+
+.tab-link:hover {
+  color: #000;
+}
+
+/* Active tab styling */
+#tab-research:checked ~ .tabs label[for="tab-research"],
+#tab-blogs:checked ~ .tabs label[for="tab-blogs"] {
+  color: #000;
+  border-bottom: 2px solid #000;
+}
+
+/* Hide all tab content by default */
+.tab-content {
+  display: none;
+}
+
+/* Show content based on checked radio */
+#tab-research:checked ~ #content-area #research-content {
+  display: block;
+}
+
+#tab-blogs:checked ~ #content-area #blogs-content {
+  display: block;
+}
+
+/* ===== Typography ===== */
+h1 {
+  font-size: 1.4em;
+  margin: 0;
+}
+
+h2 {
+  font-size: 1em;
+  border-bottom: 1px solid #ccc;
+  margin: 0.8em 0 0.3em;
+  font-weight: normal;
+}
+
+p {
+  margin: 0.4em 0;
+}
+
+/* ===== Timeline ===== */
+.timeline {
+  list-style: none;
+  padding-left: 0;
+  margin: 0.4em 0;
+}
+
+.timeline li {
+  margin-bottom: 0.3em;
+}
+
+/* ===== Links ===== */
+a {
+  color: #003399;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* ===== Footer ===== */
+footer {
+  margin-top: 1em;
+  font-size: 0.85em;
+  color: #555;
+  border-top: 1px solid #ccc;
+  padding-top: 0.4em;
+}
+
+/* ===== Post List ===== */
+.post-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.post-list li {
+  margin-bottom: 1em;
+  padding-bottom: 0.8em;
+  border-bottom: 1px dotted #ddd;
+}
+
+.post-list li:last-child {
+  border-bottom: none;
+}
+
+.post-list a {
+  font-weight: normal;
+  display: block;
+  margin-bottom: 0.2em;
+}
+
+.post-list .date {
+  font-size: 0.8em;
+  color: #666;
+  margin-left: 0;
+  display: inline-block;
+  margin-bottom: 0.3em;
+}
+
+.post-list .description {
+  font-size: 0.9em;
+  color: #444;
+  margin: 0.3em 0 0 0;
+}
+
+/* ===== Mobile ===== */
+@media (max-width: 700px) {
+  .layout {
+    grid-template-columns: 1fr;
+  }
+
+  .left {
+    border-right: none;
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 0.5em;
+    margin-bottom: 0.5em;
+  }
+
+  .tabs {
+    font-size: 0.9em;
+  }
+}
+
+/* ===== LaTeX-heavy blog/paper pages ===== */
+.latex-post {
+  margin-bottom: 1.2em;
+  padding-bottom: 0.8em;
+  border-bottom: 1px dashed #bbb;
+}
+
+.latex-post h3 {
+  font-size: 1em;
+  font-weight: normal;
+  margin: 0 0 0.2em;
+}
+
+.latex-post .meta {
+  font-size: 0.8em;
+  color: #666;
+  margin-bottom: 0.4em;
+}
+
+.latex-post p {
+  margin: 0.4em 0;
+}
+
+/* Paper and blog content pages */
+.paper-content,
+.blog-content {
+  max-width: 100%;
+}
+
+.paper-content h3,
+.blog-content h3 {
+  font-size: 1em;
+  font-weight: bold;
+  margin: 1.2em 0 0.4em;
+  border-bottom: none;
+}
+
+.paper-content .meta,
+.blog-content .meta {
+  font-size: 0.8em;
+  color: #666;
+  margin-bottom: 1em;
+}
+
+.paper-content p,
+.blog-content p {
+  margin: 0.6em 0;
+  text-align: justify;
+}
+
+/* Make equations visually dominant */
+.katex-display {
+  margin: 0.8em 0 !important;
+  font-size: 1.05em;
+}

@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sayantan Biswas</title>
+
+    <link rel="stylesheet" href="style.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono&display=swap"
+      rel="stylesheet"
+    />
+    <!-- KaTeX -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"
+    />
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"
+    ></script>
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+      onload="
+        renderMathInElement(document.body, {
+          delimiters: [
+            { left: '$$', right: '$$', display: true },
+            { left: '$', right: '$', display: false },
+          ],
+        })
+      "
+    ></script>
+  </head>
+
+  <body>
+    <header class="top">
+      <h1>Sayantan Biswas</h1>
+      <p class="subtitle">Graphs · Causality · ML</p>
+    </header>
+
+    <main class="layout">
+      <!-- LEFT COLUMN -->
+      <aside class="left">
+        <h2><b>Bio</b></h2>
+        <p>Hello World! Can causal learning be a new type of ML paradigm?</p>
+
+        <h2><b>Academic Timeline</b></h2>
+        <ul class="timeline">
+          <li>2025 - present: PhD in AI/ML</li>
+          <li>2022 - 2024: MSc in Data Science</li>
+          <li>2019 - 2022: BSc in Statistics</li>
+        </ul>
+
+        <h2><b>Contact</b></h2>
+        <p>
+          <a href="https://github.com/planetlibrary">GitHub</a>
+        </p>
+      </aside>
+
+      <!-- RIGHT COLUMN -->
+      <section class="right">
+        <!-- Hidden radio inputs for tab state -->
+        <input type="radio" name="tabs" id="tab-research" checked />
+        <input type="radio" name="tabs" id="tab-blogs" />
+
+        <!-- Tab Navigation -->
+        <nav class="tabs">
+          <label for="tab-research" class="tab-link">Research</label>
+          <label for="tab-blogs" class="tab-link">Blogs</label>
+        </nav>
+
+        <!-- Tab Content Container -->
+        <div id="content-area">
+          <!-- Research Tab (default) -->
+          <div id="research-content" class="tab-content">
+            <h2>Papers Explained</h2>
+            <ul class="post-list">
+              <li>
+                <a href="coming-soon.html">Coming soon!</a>
+              </li>
+            </ul>
+          </div>
+
+          <!-- Blogs Tab -->
+          <div id="blogs-content" class="tab-content">
+            <h2>Blog Posts</h2>
+            <ul class="post-list">
+              <li>
+                <a href="coming-soon.html">Coming soon!</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>© 2026 Sayantan Biswas</footer>
+  </body>
+</html>
