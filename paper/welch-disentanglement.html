@@ -1,0 +1,295 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Welch et al. — Layerwise Causal Peeling | Sayantan Biswas</title>
+
+    <link rel="stylesheet" href="../style.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono&display=swap"
+      rel="stylesheet"
+    />
+    <!-- KaTeX -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"
+    />
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"
+    ></script>
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+      onload="
+        renderMathInElement(document.body, {
+          delimiters: [
+            { left: '$$', right: '$$', display: true },
+            { left: '$', right: '$', display: false },
+          ],
+        })
+      "
+    ></script>
+  </head>
+
+  <body>
+    <header class="top">
+      <h1>Sayantan Biswas</h1>
+      <p class="subtitle"><a href="../index.html">← Back to home</a></p>
+    </header>
+
+    <main class="layout">
+      <!-- LEFT COLUMN -->
+      <aside class="left">
+        <h2>Paper Info</h2>
+        <p><b>Authors:</b> Ryan Welch, Jiaqi Zhang, Caroline Uhler</p>
+        <p><b>Year:</b> 2024</p>
+        <p><b>Conference:</b> NeurIPS</p>
+        <p>
+          <b>Source:</b><a href="https://arxiv.org/abs/2410.23620">arXiv</a>
+        </p>
+
+        <h2>Tags</h2>
+        <p>causality, identifiability, linear models, structure learning</p>
+      </aside>
+
+      <!-- RIGHT COLUMN -->
+      <section class="right">
+        <article class="paper-content">
+          <h2>Layerwise Causal Peeling in Linear Structural Equation Models</h2>
+
+          <p class="meta">Explained: Feb 2026</p>
+
+          <h3>Introduction</h3>
+
+          The central question this paper tackles is:
+          <b
+            >Under what mathematical conditions can we uncover the true hidden
+            causal variables purely from seeing the data ($\mathbf{x}$), without
+            ever poking the system?</b
+          >
+
+          <h3>The Intuition Gap</h3>
+
+          Standard theory (like ICA) tells us that without extra information,
+          there are infinite ways to interpret the data. This paper narrows that
+          infinite space down to one unique solution (up to trivial changes) by
+          imposing structure on the mechanism rather than requiring external
+          interventions.
+
+          <h3>Problem Setup</h3>
+
+          <p>
+            We consider a linear structural equation model where the observed
+            variables $X \in \mathbb{R}^d$ are generated according to:
+          </p>
+
+          <p>$$ X = B X + \epsilon $$</p>
+
+          <p>
+            where $B \in \mathbb{R}^{d \times d}$ is the weighted adjacency
+            matrix of the causal graph, and $\epsilon \sim \mathcal{N}(0,
+            \Sigma_\epsilon)$ is the noise vector with diagonal covariance. The
+            key assumption is that the graph is acyclic (DAG), which implies
+            there exists a topological ordering such that $B$ becomes strictly
+            upper triangular.
+          </p>
+
+          <p>
+            The central question is:
+            <i
+              >Can we recover the causal ordering and the matrix $B$ from i.i.d.
+              samples of $X$?</i
+            >
+          </p>
+
+          <h3>Main Idea: Hessian-Based Peeling</h3>
+
+          <p>
+            The key insight is that leaf nodes (nodes with no children) in the
+            causal DAG can be identified through their conditional independence
+            structure. The paper proposes using the Frobenius norm of the
+            Hessian of the conditional log-likelihood as a criterion:
+          </p>
+
+          <p>
+            $$ j^* = \arg\min_{j \in [d]} \| \nabla^2 \ell(X_j \mid X_{-j}) \|_F
+            $$
+          </p>
+
+          <p>
+            where $\ell(X_j \mid X_{-j})$ is the conditional log-likelihood of
+            variable $X_j$ given all other variables $X_{-j}$. Intuitively, a
+            leaf node has minimal Hessian norm because it depends on its parents
+            but doesn't influence any children.
+          </p>
+
+          <h3>Algorithm Overview</h3>
+
+          <p>The algorithm proceeds in layers:</p>
+
+          <p>
+            <b>1. Initialization:</b> Start with the full set of variables
+            $\mathcal{V} = \{1, \ldots, d\}$.
+          </p>
+
+          <p>
+            <b>2. Identify leaf layer:</b> For each remaining variable $j \in
+            \mathcal{V}$, compute:
+          </p>
+
+          <p>
+            $$ H_j = \nabla^2 \ell(X_j \mid X_{\mathcal{V} \setminus \{j\}}) $$
+          </p>
+
+          <p>
+            Select the variable(s) with minimal $\|H_j\|_F$ as the current
+            layer.
+          </p>
+
+          <p>
+            <b>3. Remove and repeat:</b> Remove identified variables from
+            $\mathcal{V}$ and repeat step 2 until all variables are ordered.
+          </p>
+
+          <p>
+            <b>4. Recover weights:</b> Once the ordering is established,
+            estimate $B$ using least squares regression respecting the causal
+            order.
+          </p>
+
+          <h3>Theoretical Guarantees</h3>
+
+          <p>
+            Under mild conditions on the noise distribution and the spectral
+            properties of $B$, the paper shows that:
+          </p>
+
+          <p>
+            $$ \mathbb{P}\left( \text{correct ordering recovered} \right) \to 1
+            \quad \text{as} \quad n \to \infty $$
+          </p>
+
+          <p>where $n$ is the number of samples. The key requirements are:</p>
+
+          <p>
+            (a) The noise $\epsilon_i$ is sub-Gaussian with variance lower
+            bounded by $\sigma^2_{\min} > 0$.
+          </p>
+
+          <p>
+            (b) The graph satisfies a "layer separation" condition, ensuring
+            that leaf nodes are distinguishable from non-leaf nodes through
+            their Hessian magnitudes.
+          </p>
+
+          <p>
+            (c) Sample complexity scales as $n = \Omega(d^2 \log d /
+            \sigma^4_{\min})$ for consistent recovery.
+          </p>
+
+          <h3>Computational Complexity</h3>
+
+          <p>
+            Computing the Hessian for each variable requires $O(d^3)$ operations
+            (matrix inversion). Since we need to evaluate this for all $d$
+            variables across $O(d)$ layers, the total complexity is $O(d^4)$ per
+            iteration, with overall complexity $O(d^5)$.
+          </p>
+
+          <p>
+            For practical implementation, the authors suggest using approximate
+            Hessian estimation via finite differences or autodifferentiation,
+            reducing the constant factors.
+          </p>
+
+          <h3>Practical Considerations</h3>
+
+          <p>
+            <b>Advantages:</b> The method is parameter-free (no tuning
+            required), handles equal variances, and provides exact recovery
+            guarantees under the stated assumptions.
+          </p>
+
+          <p>
+            <b>Limitations:</b> The approach assumes linearity and Gaussian
+            noise. Extensions to nonlinear SEMs or non-Gaussian noise
+            distributions require additional structural assumptions (e.g.,
+            additive noise models).
+          </p>
+
+          <h3>Example: Three-Variable Chain</h3>
+
+          <p>Consider the simple chain $X_1 \to X_2 \to X_3$:</p>
+
+          <p>
+            $$ \begin{aligned} X_1 &= \epsilon_1 \\ X_2 &= b_{12} X_1 +
+            \epsilon_2 \\ X_3 &= b_{23} X_2 + \epsilon_3 \end{aligned} $$
+          </p>
+
+          <p>
+            In the first iteration, we compute Hessians for all three variables.
+            Since $X_3$ is a leaf, its Hessian norm $\|H_3\|_F$ will be smallest
+            (it regresses only on its parent $X_2$, with no downstream effects).
+            We identify $X_3$ first, remove it, then proceed to find $X_2$, and
+            finally $X_1$.
+          </p>
+
+          <h3>Connection to Other Methods</h3>
+
+          <p>This approach is related to but distinct from:</p>
+
+          <p>
+            <b>GES/PC algorithms:</b> These use conditional independence tests
+            but don't exploit the Hessian structure. Layerwise peeling provides
+            stronger guarantees under the linear-Gaussian assumption.
+          </p>
+
+          <p>
+            <b>Score-based methods (e.g., NOTEARS):</b> These optimize over the
+            space of DAGs directly. The peeling approach is more interpretable
+            and doesn't require solving a challenging continuous optimization
+            problem.
+          </p>
+
+          <p>
+            <b>ICA-based methods (e.g., LiNGAM):</b> These assume non-Gaussian
+            noise to achieve identifiability. Layerwise peeling works under
+            Gaussian noise but requires acyclicity and specific variance
+            conditions.
+          </p>
+
+          <h3>Open Questions</h3>
+
+          <p>Several directions remain open:</p>
+
+          <p>
+            (i) Can the sample complexity be improved to $O(d \log d)$? Current
+            bounds are quadratic in $d$.
+          </p>
+
+          <p>
+            (ii) How does the method perform under model misspecification (e.g.,
+            mild nonlinearities)?
+          </p>
+
+          <p>(iii) Extensions to cyclic graphs or latent confounders?</p>
+
+          <h3>Conclusion</h3>
+
+          <p>
+            The layerwise peeling algorithm provides an elegant and
+            theoretically grounded approach to causal structure learning in
+            linear SEMs. By exploiting the differential geometry of the
+            likelihood surface (via Hessians), it achieves consistent recovery
+            without requiring non-Gaussian assumptions or complex optimization
+            procedures.
+          </p>
+        </article>
+      </section>
+    </main>
+
+    <footer>© 2026 Sayantan Biswas</footer>
+  </body>
+</html>
