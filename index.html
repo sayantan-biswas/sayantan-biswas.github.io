@@ -4,16 +4,28 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Sayantan Biswas</title>
-    <meta name="title" content="Sayantan Biswas | Graphs, Causality & Machine Learning" />
-    <meta name="description" content="PhD Researcher in AI/ML focusing on Causal Inference and Graph Neural Networks. Explore my academic timeline and research blog." />
+    <meta
+      name="title"
+      content="Sayantan Biswas | Graphs, Causality & Machine Learning"
+    />
+    <meta
+      name="description"
+      content="PhD Researcher in AI/ML focusing on Causal Inference and Graph Neural Networks. Explore my academic timeline and research blog."
+    />
     <meta name="author" content="Sayantan Biswas" />
 
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="Sayantan Biswas | Graphs, Causality & ML" />
-    <meta property="og:description" content="PhD Researcher in AI/ML focusing on Causal Inference and Graph Neural Networks." />
+    <meta
+      property="og:title"
+      content="Sayantan Biswas | Graphs, Causality & ML"
+    />
+    <meta
+      property="og:description"
+      content="PhD Researcher in AI/ML focusing on Causal Inference and Graph Neural Networks."
+    />
 
     <link rel="stylesheet" href="style.css" />
-    <link rel="icon" type="image/png" href="favicon.ico">
+    <link rel="icon" type="image/png" href="favicon.ico" />
     <link
       href="https://fonts.googleapis.com/css2?family=JetBrains+Mono&display=swap"
       rel="stylesheet"
@@ -71,11 +83,13 @@
         <!-- Hidden radio inputs for tab state -->
         <input type="radio" name="tabs" id="tab-research" checked />
         <input type="radio" name="tabs" id="tab-blogs" />
+        <input type="radio" name="tabs" id="tab-resources" />
 
         <!-- Tab Navigation -->
         <nav class="tabs">
           <label for="tab-research" class="tab-link">Research</label>
           <label for="tab-blogs" class="tab-link">Blogs</label>
+          <label for="tab-resources" class="tab-link">Resources</label>
         </nav>
 
         <!-- Tab Content Container -->
@@ -85,12 +99,21 @@
             <h2>Papers Explained</h2>
             <ul class="post-list">
               <li>
-                <a href="coming-soon.html">Coming soon!</a>
+                <a href="paper/welch-disentanglement.html">
+                  Identifiability Guarantees for Causal Disentanglement from
+                  Purely Observational Data</a
+                >
+                <p class="description">
+                  A comprehensive breakdown of how we can recover latent causal
+                  factors without interventions, challenging the standard
+                  assumptions of Causal Representation Learning.
+                </p>
               </li>
             </ul>
           </div>
 
           <!-- Blogs Tab -->
+
           <div id="blogs-content" class="tab-content">
             <h2>Blog Posts</h2>
             <ul class="post-list">
@@ -99,8 +122,73 @@
               </li>
             </ul>
           </div>
+          <!-- Resources Tab -->
+          <div id="resources-content" class="tab-content">
+
+            <h2>Videos</h2>
+            <ul class="post-list">
+              <li>
+                <a href="https://www.youtube.com/playlist?list=PLoazKTcS0Rzb6bb9L508cyJ1z-U9iWkA0" target="_blank" rel="noopener">Causal Inference Course Lectures</a>
+                <span class="description">Brady Neal — Causal Inference</span>
+              </li>
+              <li>
+                <a href="https://www.youtube.com/watch?v=hKs-PHZnIbQ" target="_blank" rel="noopener">Causal Representation Learning</a>
+              </li>
+              <li>
+                <a href="https://youtube.com/playlist?list=PLoROMvodv4rPLKxIpqhjhPgdQy7imNkDn&si=ZDQ19HTNR9YdpMsR" target="_blank" rel="noopener">Stanford CS224W: ML with Graphs</a>
+                <span class="description">Jure Leskovec</span>
+              </li>
+            </ul>
+
+            <h2>Weblogs</h2>
+            <ul class="post-list">
+              <li>
+                <a href="https://causality.cs.ucla.edu/blog/" target="_blank" rel="noopener">Causal Analysis in Theory and Practice</a>
+                <span class="description">Scott Mueller and Judea Pearl</span>
+              </li>
+              <li>
+                <a href="https://causalwizard.app/" target="_blank" rel="noopener">Causal Wizard</a>
+              </li>
+              <li>
+                <a href="https://dl.acm.org/doi/10.1145/3570991.3571052" target="_blank" rel="noopener">ACM — Causal Learning vs Causal Inference</a>
+              </li>
+              <li>
+                <a href="https://hfooladi.github.io/posts/2019/04/Causal-Inference-and-learning/" target="_blank" rel="noopener">Causal Inference and Learning</a>
+                <span class="description">Hosein Fooladi</span>
+              </li>
+            </ul>
+
+            <h2>Datasets</h2>
+            <ul class="post-list">
+              <li>
+                <a href="https://portal.gdc.cancer.gov/analysis_page?app=Downloads" target="_blank" rel="noopener">TCGA</a>
+              </li>
+              <li>
+                <a href="https://camelyon17.grand-challenge.org/Data/" target="_blank" rel="noopener">CAMELYON17</a>
+              </li>
+            </ul>
+
+            <h2>GitHub</h2>
+            <ul class="post-list">
+              <li>
+                <a href="https://github.com/realrate/Causing" target="_blank" rel="noopener">Causing: CAUsal INterpretation using Graphs</a>
+              </li>
+              <li>
+                <a href="https://github.com/uhlerlab/observational-crl" target="_blank" rel="noopener">Identifiability Guarantees for Causal Disentanglement</a>
+                <span class="description">Welch et al. — uhlerlab</span>
+              </li>
+            </ul>
+
+            <h2>Books</h2>
+            <ul class="post-list">
+              <li>
+                <a href="https://www.degruyterbrill.com/document/doi/10.1515/jci-2013-0003/html?lang=en" target="_blank" rel="noopener">Linear Models: A Useful "Microscope" for Causal Analysis</a>
+                <span class="description">Judea Pearl</span>
+              </li>
+            </ul>
+
+          </div>
         </div>
-      </section>
     </main>
 
     <footer>© 2026 Sayantan Biswas</footer>

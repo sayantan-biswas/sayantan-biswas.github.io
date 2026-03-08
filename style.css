@@ -86,7 +86,8 @@ input[type="radio"][name="tabs"] {
 
 /* Active tab styling */
 #tab-research:checked ~ .tabs label[for="tab-research"],
-#tab-blogs:checked ~ .tabs label[for="tab-blogs"] {
+#tab-blogs:checked ~ .tabs label[for="tab-blogs"],
+#tab-resources:checked ~ .tabs label[for="tab-resources"] {
   color: #000;
   border-bottom: 2px solid #000;
 }
@@ -102,6 +103,10 @@ input[type="radio"][name="tabs"] {
 }
 
 #tab-blogs:checked ~ #content-area #blogs-content {
+  display: block;
+}
+
+#tab-resources:checked ~ #content-area #resources-content {
   display: block;
 }
 
@@ -183,10 +188,12 @@ footer {
   margin-bottom: 0.3em;
 }
 
-.post-list .description {
+.post-list .description,
+.post-list span.description {
   font-size: 0.9em;
   color: #444;
   margin: 0.3em 0 0 0;
+  display: block;
 }
 
 /* ===== Mobile ===== */
