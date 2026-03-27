@@ -62,20 +62,53 @@
     <main class="layout">
       <!-- LEFT COLUMN -->
       <aside class="left">
-        <h2><b>Bio</b></h2>
-        <p>Hello World! Can causal learning be a new type of ML paradigm?</p>
+        <div class="side-card">
+          <div class="res-card-header">
+            <span class="res-icon">◉</span>
+            <span class="res-category">Bio</span>
+          </div>
+          <p class="side-body">
+            Hello World! Can causal learning be a new type of ML paradigm?
+          </p>
+        </div>
 
-        <h2><b>Academic Timeline</b></h2>
-        <ul class="timeline">
-          <li>2025 - present: PhD in AI/ML</li>
-          <li>2022 - 2024: MSc in Data Science</li>
-          <li>2019 - 2022: BSc in Statistics</li>
-        </ul>
+        <div class="side-card">
+          <div class="res-card-header">
+            <span class="res-icon">◎</span>
+            <span class="res-category">Timeline</span>
+          </div>
+          <ul class="side-timeline">
+            <li>
+              <span class="tl-year">2025–</span>
+              <span class="tl-desc">PhD in AI/ML</span>
+            </li>
+            <li>
+              <span class="tl-year">2022–24</span>
+              <span class="tl-desc">MSc Data Science</span>
+            </li>
+            <li>
+              <span class="tl-year">2019–22</span>
+              <span class="tl-desc">BSc Statistics</span>
+            </li>
+          </ul>
+        </div>
 
-        <h2><b>Contact</b></h2>
-        <p>
-          <a href="https://github.com/planetlibrary">GitHub</a>
-        </p>
+        <div class="side-card">
+          <div class="res-card-header">
+            <span class="res-icon">◇</span>
+            <span class="res-category">Contact</span>
+          </div>
+          <ul class="side-links">
+            <li>
+              <a
+                href="https://github.com/planetlibrary"
+                target="_blank"
+                rel="noopener"
+                >GitHub ↗</a
+              >
+            </li>
+          </ul>
+        </div>
       </aside>
 
       <!-- RIGHT COLUMN -->
@@ -96,171 +129,228 @@
         <div id="content-area">
           <!-- Research Tab (default) -->
           <div id="research-content" class="tab-content">
-            <h2>Papers Explained</h2>
-            <ul class="post-list">
-              <li>
-                <a href="paper/welch-disentanglement.html">
-                  Identifiability Guarantees for Causal Disentanglement from
-                  Purely Observational Data</a
-                >
-                <p class="description">
-                  A comprehensive breakdown of how we can recover latent causal
-                  factors without interventions, challenging the standard
-                  assumptions of Causal Representation Learning.
-                </p>
-              </li>
-            </ul>
+            <div class="res-card res-card--full">
+              <div class="res-card-header">
+                <span class="res-icon">◈</span>
+                <span class="res-category">Papers Explained</span>
+                <span class="res-count">1</span>
+              </div>
+              <ul class="res-list res-list--papers">
+                <li>
+                  <a href="paper/welch-disentanglement.html">
+                    Identifiability Guarantees for Causal Disentanglement from
+                    Purely Observational Data
+                  </a>
+                  <span class="res-meta"
+                    >Welch et al. — Causal Representation Learning</span
+                  >
+                  <span class="res-abstract"
+                    >A breakdown of recovering latent causal factors without
+                    interventions, challenging standard CRL assumptions.</span
+                  >
+                </li>
+              </ul>
+            </div>
           </div>
 
           <!-- Blogs Tab -->
-
           <div id="blogs-content" class="tab-content">
-            <h2>Blog Posts</h2>
-            <ul class="post-list">
-              <li>
-                <a href="coming-soon.html">Coming soon!</a>
-              </li>
-            </ul>
+            <div class="res-card res-card--full">
+              <div class="res-card-header">
+                <span class="res-icon">✦</span>
+                <span class="res-category">Blog Posts</span>
+              </div>
+              <ul class="res-list">
+                <li>
+                  <a href="coming-soon.html">Coming soon!</a>
+                  <span class="res-meta">check back later</span>
+                </li>
+              </ul>
+            </div>
           </div>
           <!-- Resources Tab -->
           <div id="resources-content" class="tab-content">
-            <h2>Videos</h2>
-            <ul class="post-list">
-              <li>
-                <a
-                  href="https://www.youtube.com/playlist?list=PLoazKTcS0Rzb6bb9L508cyJ1z-U9iWkA0"
-                  target="_blank"
-                  rel="noopener"
-                  >Causal Inference Course Lectures</a
-                >
-                <span class="description">Brady Neal — Causal Inference</span>
-              </li>
-              <li>
-                <a
-                  href="https://www.youtube.com/watch?v=hKs-PHZnIbQ"
-                  target="_blank"
-                  rel="noopener"
-                  >Causal Representation Learning</a
-                >
-              </li>
-              <li>
-                <a
-                  href="https://youtube.com/playlist?list=PLoROMvodv4rPLKxIpqhjhPgdQy7imNkDn&si=ZDQ19HTNR9YdpMsR"
-                  target="_blank"
-                  rel="noopener"
-                  >Stanford CS224W: ML with Graphs</a
-                >
-                <span class="description">Jure Leskovec</span>
-              </li>
-            </ul>
+            <div class="resources-grid">
+              <div class="res-card">
+                <div class="res-card-header">
+                  <span class="res-icon">▶</span>
+                  <span class="res-category">Videos</span>
+                  <span class="res-count">3</span>
+                </div>
+                <ul class="res-list">
+                  <li>
+                    <a
+                      href="https://www.youtube.com/playlist?list=PLoazKTcS0Rzb6bb9L508cyJ1z-U9iWkA0"
+                      target="_blank"
+                      rel="noopener"
+                    >
+                      Causal Inference Course Lectures
+                    </a>
+                    <span class="res-meta">Brady Neal</span>
+                  </li>
+                  <li>
+                    <a
+                      href="https://www.youtube.com/watch?v=hKs-PHZnIbQ"
+                      target="_blank"
+                      rel="noopener"
+                    >
+                      Causal Representation Learning
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      href="https://youtube.com/playlist?list=PLoROMvodv4rPLKxIpqhjhPgdQy7imNkDn&si=ZDQ19HTNR9YdpMsR"
+                      target="_blank"
+                      rel="noopener"
+                    >
+                      Stanford CS224W: ML with Graphs
+                    </a>
+                    <span class="res-meta">Jure Leskovec</span>
+                  </li>
+                </ul>
+              </div>
 
-            <h2>Weblogs</h2>
-            <ul class="post-list">
-              <li>
-                <a
-                  href="https://causality.cs.ucla.edu/blog/"
-                  target="_blank"
-                  rel="noopener"
-                  >Causal Analysis in Theory and Practice</a
-                >
-                <span class="description">Scott Mueller and Judea Pearl</span>
-              </li>
-              <li>
-                <a
-                  href="https://causalwizard.app/"
-                  target="_blank"
-                  rel="noopener"
-                  >Causal Wizard</a
-                >
-              </li>
-              <li>
-                <a
-                  href="https://dl.acm.org/doi/10.1145/3570991.3571052"
-                  target="_blank"
-                  rel="noopener"
-                  >ACM — Causal Learning vs Causal Inference</a
-                >
-              </li>
-              <li>
-                <a
-                  href="https://hfooladi.github.io/posts/2019/04/Causal-Inference-and-learning/"
-                  target="_blank"
-                  rel="noopener"
-                  >Causal Inference and Learning</a
-                >
-                <span class="description">Hosein Fooladi</span>
-              </li>
-            </ul>
+              <div class="res-card">
+                <div class="res-card-header">
+                  <span class="res-icon">◈</span>
+                  <span class="res-category">Weblogs</span>
+                  <span class="res-count">4</span>
+                </div>
+                <ul class="res-list">
+                  <li>
+                    <a
+                      href="https://causality.cs.ucla.edu/blog/"
+                      target="_blank"
+                      rel="noopener"
+                    >
+                      Causal Analysis in Theory and Practice
+                    </a>
+                    <span class="res-meta">Mueller &amp; Pearl</span>
+                  </li>
+                  <li>
+                    <a
+                      href="https://causalwizard.app/"
+                      target="_blank"
+                      rel="noopener"
+                    >
+                      Causal Wizard
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      href="https://dl.acm.org/doi/10.1145/3570991.3571052"
+                      target="_blank"
+                      rel="noopener"
+                    >
+                      ACM — Causal Learning vs Causal Inference
+                    </a>
+                  </li>
+                  <li>
+                    <a
+                      href="https://hfooladi.github.io/posts/2019/04/Causal-Inference-and-learning/"
+                      target="_blank"
+                      rel="noopener"
+                    >
+                      Causal Inference and Learning
+                    </a>
+                    <span class="res-meta">Hosein Fooladi</span>
+                  </li>
+                </ul>
+              </div>
 
-            <h2>Datasets</h2>
-            <ul class="post-list">
-              <li>
-                <a
-                  href="https://portal.gdc.cancer.gov/analysis_page?app=Downloads"
-                  target="_blank"
-                  rel="noopener"
-                  >TCGA</a
-                >
-              </li>
-              <li>
-                <a
-                  href="https://camelyon17.grand-challenge.org/Data/"
-                  target="_blank"
-                  rel="noopener"
-                  >CAMELYON17</a
-                >
-              </li>
-            </ul>
+              <div class="res-card">
+                <div class="res-card-header">
+                  <span class="res-icon">⊞</span>
+                  <span class="res-category">Datasets</span>
+                  <span class="res-count">2</span>
+                </div>
+                <ul class="res-list">
+                  <li>
+                    <a
+                      href="https://portal.gdc.cancer.gov/analysis_page?app=Downloads"
+                      target="_blank"
+                      rel="noopener"
+                    >
+                      TCGA
+                    </a>
+                    <span class="res-meta">Genomic Data Commons</span>
+                  </li>
+                  <li>
+                    <a
+                      href="https://camelyon17.grand-challenge.org/Data/"
+                      target="_blank"
+                      rel="noopener"
+                    >
+                      CAMELYON17
+                    </a>
+                    <span class="res-meta">Pathology Grand Challenge</span>
+                  </li>
+                </ul>
+              </div>
 
-            <h2>GitHub</h2>
-            <ul class="post-list">
-              <li>
-                <a
-                  href="https://github.com/realrate/Causing"
-                  target="_blank"
-                  rel="noopener"
-                  >Causing: CAUsal INterpretation using Graphs</a
-                >
-              </li>
-              <li>
-                <a
-                  href="https://github.com/uhlerlab/observational-crl"
-                  target="_blank"
-                  rel="noopener"
-                  >Identifiability Guarantees for Causal Disentanglement</a
-                >
-                <span class="description">Welch et al. — uhlerlab</span>
-              </li>
-            </ul>
+              <div class="res-card">
+                <div class="res-card-header">
+                  <span class="res-icon">⌥</span>
+                  <span class="res-category">GitHub</span>
+                  <span class="res-count">2</span>
+                </div>
+                <ul class="res-list">
+                  <li>
+                    <a
+                      href="https://github.com/realrate/Causing"
+                      target="_blank"
+                      rel="noopener"
+                    >
+                      Causing: CAUsal INterpretation using Graphs
+                    </a>
+                    <span class="res-meta">realrate</span>
+                  </li>
+                  <li>
+                    <a
+                      href="https://github.com/uhlerlab/observational-crl"
+                      target="_blank"
+                      rel="noopener"
+                    >
+                      Identifiability Guarantees for Causal Disentanglement
+                    </a>
+                    <span class="res-meta">Welch et al. — uhlerlab</span>
+                  </li>
+                </ul>
+              </div>
 
-            <h2>Books</h2>
-            <ul class="post-list">
-              <li>
-                <a
-                  href="https://www.degruyterbrill.com/document/doi/10.1515/jci-2013-0003/html?lang=en"
-                  target="_blank"
-                  rel="noopener"
-                  >Linear Models: A Useful "Microscope" for Causal Analysis</a
-                >
-                <!-- <span class="description">Judea Pearl</span> -->
-              </li>
-              <li>
-                <a
-                  href="https://web.stanford.edu/~boyd/cvxbook/bv_cvxbook.pdf"
-                  target="_blank"
-                  rel="noopener"
-                  >Convex Optimization • Boyd, Vandenberghe</a
-                >
-                <!-- <span class="description"
-                  >A foundational textbook on the theory and methods of convex
-                  optimization&nbsp;
-                  <a
-                    href="https://web.stanford.edu/~boyd/cvxbook/bv_cvxbook.pdf"
-                    >[source]</a
-                  >
-                </span> -->
-              </li>
-            </ul>
+              <div class="res-card res-card--wide">
+                <div class="res-card-header">
+                  <span class="res-icon">□</span>
+                  <span class="res-category">Books &amp; Papers</span>
+                  <span class="res-count">2</span>
+                </div>
+                <ul class="res-list res-list--row">
+                  <li>
+                    <a
+                      href="https://www.degruyterbrill.com/document/doi/10.1515/jci-2013-0003/html?lang=en"
+                      target="_blank"
+                      rel="noopener"
+                    >
+                      Linear Models: A Useful "Microscope" for Causal Analysis
+                    </a>
+                    <span class="res-meta">Judea Pearl — JCI 2013</span>
+                  </li>
+                  <li>
+                    <a
+                      href="https://web.stanford.edu/~boyd/cvxbook/bv_cvxbook.pdf"
+                      target="_blank"
+                      rel="noopener"
+                    >
+                      Convex Optimization
+                    </a>
+                    <span class="res-meta"
+                      >Boyd &amp; Vandenberghe — Stanford
+                      https://www.desmos.com/calculator/nk6gtkx9cm
+                    </span>
+                  </li>
+                </ul>
+              </div>
+            </div>
           </div>
         </div>
       </section>

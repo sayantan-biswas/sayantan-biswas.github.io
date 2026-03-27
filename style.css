@@ -1,10 +1,10 @@
 /* ===== Base ===== */
 body {
   font-family: "JetBrains Mono", "Fira Mono", "Source Code Pro", monospace;
-  background: #fafafa;
+  background: #f5f5f3;
   color: #111;
-  max-width: auto;
-  margin: 1em auto;
+  max-width: 860px;
+  margin: 1.5em auto;
   padding: 0 1.2em;
   line-height: 1.45;
   font-size: 14px;
@@ -12,92 +12,156 @@ body {
 
 /* ===== Header ===== */
 header.top {
-  border-bottom: 1px solid #bbb;
-  padding-bottom: 0.4em;
+  border: 1px solid #bbb;
+  background: #fff;
+  padding: 0.6em 0.85em;
   margin-bottom: 1em;
+  display: flex;
+  align-items: baseline;
+  gap: 1em;
 }
 
 header.top h1 {
-  margin: 0 0 0.2em 0;
+  margin: 0;
+  font-size: 1.2em;
+  font-weight: bold;
+  letter-spacing: -0.01em;
 }
 
 .subtitle {
   margin: 0;
-  font-size: 0.85em;
-  color: #555;
+  font-size: 0.8em;
+  color: #777;
+  letter-spacing: 0.04em;
 }
 
 /* ===== Layout ===== */
 .layout {
   display: grid;
-  grid-template-columns: 175px 1fr;
-  gap: 1.2em;
+  grid-template-columns: 160px 1fr;
+  gap: 0.75em;
+  align-items: start;
 }
 
 /* ===== Left column ===== */
 .left {
-  font-size: 0.95em;
-  border-right: 1px solid #bbb;
-  padding-right: 0.6em;
-  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 0.6em;
 }
 
-.left h2 {
-  margin-top: 0;
-  text-align: left;
+/* ===== Side cards (left column) ===== */
+.side-card {
+  border: 1px solid #ccc;
+  background: #fff;
+  padding: 0.5em 0.65em;
 }
 
-.left p,
-.left ul {
-  text-align: left;
+.side-card:hover {
+  border-color: #888;
+}
+
+.side-body {
+  font-size: 0.82em;
+  color: #444;
+  margin: 0.3em 0 0;
+  line-height: 1.5;
+}
+
+.side-timeline {
+  list-style: none;
+  padding: 0;
+  margin: 0.3em 0 0;
+}
+
+.side-timeline li {
+  display: flex;
+  gap: 0.5em;
+  padding: 0.18em 0;
+  border-bottom: 1px dotted #eee;
+  font-size: 0.8em;
+}
+
+.side-timeline li:last-child {
+  border-bottom: none;
+}
+
+.tl-year {
+  color: #888;
+  flex-shrink: 0;
+  width: 3.8em;
+}
+
+.tl-desc {
+  color: #222;
+}
+
+.side-links {
+  list-style: none;
+  padding: 0;
+  margin: 0.3em 0 0;
+}
+
+.side-links li {
+  font-size: 0.82em;
+  padding: 0.15em 0;
+}
+
+.side-links a {
+  color: #003399;
 }
 
 /* ===== Right column ===== */
+.right {
+  min-width: 0;
+}
+
 .right h2:first-child {
   margin-top: 0;
 }
 
 /* ===== Tab System (Pure CSS) ===== */
-/* Hide radio inputs */
 input[type="radio"][name="tabs"] {
   display: none;
 }
 
-/* Tab Navigation */
 .tabs {
-  border-bottom: 1px solid #ccc;
-  margin-bottom: 1em;
-  padding-bottom: 0.3em;
+  border: 1px solid #ccc;
+  background: #fff;
+  margin-bottom: 0.75em;
+  padding: 0.35em 0.75em;
+  display: flex;
+  gap: 0;
 }
 
 .tab-link {
   display: inline-block;
-  margin-right: 1em;
-  padding-bottom: 0.2em;
-  color: #666;
+  padding: 0.2em 0.75em 0.2em 0;
+  margin-right: 0.75em;
+  color: #888;
   cursor: pointer;
   border-bottom: 2px solid transparent;
-  transition: all 0.2s;
+  font-size: 0.82em;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  transition: color 0.15s;
 }
 
 .tab-link:hover {
-  color: #000;
+  color: #333;
 }
 
-/* Active tab styling */
 #tab-research:checked ~ .tabs label[for="tab-research"],
 #tab-blogs:checked ~ .tabs label[for="tab-blogs"],
 #tab-resources:checked ~ .tabs label[for="tab-resources"] {
-  color: #000;
-  border-bottom: 2px solid #000;
+  color: #111;
+  border-bottom: 2px solid #111;
 }
 
-/* Hide all tab content by default */
 .tab-content {
   display: none;
 }
 
-/* Show content based on checked radio */
 #tab-research:checked ~ #content-area #research-content {
   display: block;
 }
@@ -127,17 +191,6 @@ p {
   margin: 0.4em 0;
 }
 
-/* ===== Timeline ===== */
-.timeline {
-  list-style: none;
-  padding-left: 0;
-  margin: 0.4em 0;
-}
-
-.timeline li {
-  margin-bottom: 0.3em;
-}
-
 /* ===== Links ===== */
 a {
   color: #003399;
@@ -150,50 +203,136 @@ a:hover {
 
 /* ===== Footer ===== */
 footer {
-  margin-top: 1em;
-  font-size: 0.85em;
-  color: #555;
-  border-top: 1px solid #ccc;
-  padding-top: 0.4em;
+  margin-top: 0.75em;
+  font-size: 0.78em;
+  color: #888;
+  border: 1px solid #ccc;
+  background: #fff;
+  padding: 0.4em 0.85em;
 }
 
-/* ===== Post List ===== */
-.post-list {
+/* ===== Resources / unified card grid ===== */
+.resources-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.6em;
+}
+
+.res-card {
+  border: 1px solid #ccc;
+  padding: 0.55em 0.7em;
+  background: #fff;
+  transition: border-color 0.15s;
+}
+
+.res-card:hover {
+  border-color: #888;
+}
+
+.res-card--wide {
+  grid-column: 1 / -1;
+}
+
+.res-card--full {
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.res-card-header {
+  display: flex;
+  align-items: baseline;
+  gap: 0.4em;
+  margin-bottom: 0.4em;
+  padding-bottom: 0.28em;
+  border-bottom: 1px solid #e8e8e8;
+}
+
+.res-icon {
+  font-size: 0.68em;
+  color: #999;
+  flex-shrink: 0;
+}
+
+.res-category {
+  font-size: 0.75em;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #111;
+  flex: 1;
+}
+
+.res-count {
+  font-size: 0.68em;
+  color: #aaa;
+  background: #f0f0f0;
+  padding: 0.05em 0.3em;
+  border-radius: 2px;
+}
+
+.res-list {
   list-style: none;
   padding: 0;
   margin: 0;
 }
 
-.post-list li {
-  margin-bottom: 1em;
-  padding-bottom: 0.8em;
-  border-bottom: 1px dotted #ddd;
+.res-list li {
+  padding: 0.22em 0;
+  border-bottom: 1px dotted #ebebeb;
+  display: flex;
+  flex-direction: column;
+  gap: 0.04em;
 }
 
-.post-list li:last-child {
+.res-list li:last-child {
   border-bottom: none;
+  padding-bottom: 0;
 }
 
-.post-list a {
-  font-weight: normal;
-  display: block;
-  margin-bottom: 0.2em;
+.res-list a {
+  font-size: 0.84em;
+  color: #003399;
+  line-height: 1.35;
 }
 
-.post-list .date {
-  font-size: 0.8em;
-  color: #666;
-  margin-left: 0;
-  display: inline-block;
-  margin-bottom: 0.3em;
+.res-list a:hover {
+  text-decoration: underline;
 }
 
-.post-list .description,
-.post-list span.description {
-  font-size: 0.9em;
-  color: #444;
-  margin: 0.3em 0 0 0;
-  display: block;
+.res-meta {
+  font-size: 0.7em;
+  color: #999;
+  font-style: italic;
+}
+
+.res-abstract {
+  font-size: 0.78em;
+  color: #555;
+  margin-top: 0.15em;
+  line-height: 1.4;
+}
+
+/* Papers list — slightly more breathing room */
+.res-list--papers li {
+  padding: 0.4em 0;
+}
+
+/* Wide card two-column row for books */
+.res-list--row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0 1em;
+}
+
+.res-list--row li {
+  border-bottom: none;
+  border-right: 1px dotted #ebebeb;
+  padding-right: 1em;
+}
+
+.res-list--row li:last-child {
+  border-right: none;
+  padding-right: 0;
 }
 
 /* ===== Mobile ===== */
@@ -203,14 +342,34 @@ footer {
   }
 
   .left {
-    border-right: none;
-    border-bottom: 1px solid #ccc;
-    padding-bottom: 0.5em;
-    margin-bottom: 0.5em;
+    flex-direction: row;
+    flex-wrap: wrap;
   }
 
-  .tabs {
-    font-size: 0.9em;
+  .side-card {
+    flex: 1 1 140px;
+  }
+
+  .resources-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .res-card--wide {
+    grid-column: 1;
+  }
+
+  .res-list--row {
+    grid-template-columns: 1fr;
+  }
+
+  .res-list--row li {
+    border-right: none;
+    border-bottom: 1px dotted #ebebeb;
+    padding-right: 0;
+  }
+
+  .res-list--row li:last-child {
+    border-bottom: none;
   }
 }
 
@@ -264,8 +423,66 @@ footer {
   text-align: justify;
 }
 
-/* Make equations visually dominant */
 .katex-display {
   margin: 0.8em 0 !important;
   font-size: 1.05em;
+}
+
+
+/* ===== Tags list (sidebar) ===== */
+.side-tags {
+  list-style: none;
+  padding: 0;
+  margin: 0.3em 0 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3em;
+}
+
+.side-tags li {
+  font-size: 0.72em;
+  background: #f0f0f0;
+  border: 1px solid #ddd;
+  padding: 0.1em 0.4em;
+  color: #555;
+}
+
+/* ===== Paper card wrapper ===== */
+.paper-card {
+  padding: 0.7em 0.9em 1em;
+}
+
+.paper-title {
+  font-size: 1em;
+  font-weight: bold;
+  border-bottom: none;
+  margin: 0.2em 0 0.8em;
+  line-height: 1.4;
+  color: #111;
+}
+
+/* Section headers inside paper */
+.paper-content h3 {
+  font-size: 0.8em;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #666;
+  margin: 1.2em 0 0.3em;
+  border-bottom: 1px dotted #e0e0e0;
+  padding-bottom: 0.2em;
+}
+
+.paper-content p {
+  font-size: 0.88em;
+  line-height: 1.65;
+  margin: 0.5em 0;
+  text-align: left;
+}
+
+.paper-content .meta {
+  font-size: 0.75em;
+  color: #999;
+  font-style: italic;
+  margin-bottom: 0.8em;
 }
