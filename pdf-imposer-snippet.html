@@ -1,0 +1,107 @@
+<!-- ① Add to <head> ─────────────────────────────────────────── -->
+<link rel="stylesheet" href="pdf-imposer.css" />
+
+<!-- ② Add inside <main> (or wherever your tools live) ──────── -->
+<section id="pdfimposer-root" class="pdfimposer__section">
+  <!-- Title — tweak the text to match your site's voice -->
+  <h2>Cut-and-Stack PDF Imposer</h2>
+  <p class="pdfimposer__subtitle">
+    Rearranges your PDF pages for duplex · 2-up landscape · flip-on-short-edge
+    printing.<br />
+    Cut each printed sheet vertically, stack left halves then right halves —
+    pages read 1, 2, 3, … naturally.
+  </p>
+
+  <!-- Drop zone / file picker -->
+  <div
+    class="pdfimposer__dropzone"
+    role="button"
+    tabindex="0"
+    aria-label="Upload a PDF file"
+  >
+    <span class="pdfimposer__dropzone-icon">📂</span>
+    <p>Drag &amp; drop a PDF here, or click to browse</p>
+    <input type="file" accept="application/pdf" aria-hidden="true" />
+  </div>
+
+  <!-- Options -->
+  <div class="pdfimposer__options">
+    <label>
+      <input type="checkbox" class="pdfimposer__opt-blank" checked />
+      Add blank page if page count is odd
+    </label>
+    <label>
+      <input type="checkbox" class="pdfimposer__opt-mapping" />
+      Show page-mapping table
+    </label>
+  </div>
+
+  <!-- Status / spinner -->
+  <div class="pdfimposer__status" hidden>
+    <span class="pdfimposer__spinner" style="display: none"></span>
+    <span>&nbsp;</span>
+  </div>
+
+  <!-- Error notice -->
+  <div class="pdfimposer__error" hidden role="alert"></div>
+
+  <!-- Info card (filled by JS) -->
+  <div class="pdfimposer__info" hidden></div>
+
+  <!-- Mapping table (shown when checkbox ticked) -->
+  <div class="pdfimposer__mapping-wrap" hidden>
+    <h3>Page Mapping</h3>
+    <p style="font-size: 0.82rem; opacity: 0.7; margin-bottom: 0.5rem">
+      Each row = one physical sheet. "Left" and "Right" are the page numbers
+      visible after cutting.
+    </p>
+    <table class="pdfimposer__table">
+      <thead>
+        <tr>
+          <th>Sheet</th>
+          <th>Side</th>
+          <th>Left half (src page)</th>
+          <th>Right half (src page)</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </div>
+
+  <!-- Generate button -->
+  <button
+    class="pdfimposer__btn pdfimposer__btn--primary pdfimposer__btn--generate"
+    disabled
+  >
+    ⚙️ Generate Imposed PDF
+  </button>
+
+  <!-- Download row -->
+  <div class="pdfimposer__download-row" hidden>
+    <a
+      class="pdfimposer__btn pdfimposer__btn--download"
+      download="imposed-cut-and-stack.pdf"
+    >
+      ⬇ Download Imposed PDF
+    </a>
+  </div>
+</section>
+
+<!-- ③ Add just before </body> ──────────────────────────────── -->
+
+<!--
+  pdf-lib: PDF creation / manipulation (no rasterisation).
+  Using the UMD build so PDFLib is available as a global.
+-->
+<script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+
+<!--
+  pdf.js: only needed if you want in-page page-preview thumbnails.
+  The imposer itself does NOT require pdf.js — leave these out if
+  you don't need previews and want a leaner page.
+-->
+<!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script> -->
+<!-- <script>pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';</script> -->
+
+<!-- The imposer module — must come after pdf-lib -->
+<script src="pdf-imposer.js"></script>

@@ -30,6 +30,7 @@
       href="https://fonts.googleapis.com/css2?family=JetBrains+Mono&display=swap"
       rel="stylesheet"
     />
+    <link rel="stylesheet" href="pdf-imposer.css" />
     <!-- KaTeX -->
     <link
       rel="stylesheet"
@@ -51,6 +52,23 @@
         })
       "
     ></script>
+
+    <!--
+  pdf-lib: PDF creation / manipulation (no rasterisation).
+  Using the UMD build so PDFLib is available as a global.
+-->
+    <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+
+    <!--
+  pdf.js: only needed if you want in-page page-preview thumbnails.
+  The imposer itself does NOT require pdf.js — leave these out if
+  you don't need previews and want a leaner page.
+-->
+    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script> -->
+    <!-- <script>pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';</script> -->
+
+    <!-- The imposer module — must come after pdf-lib -->
+    <script src="pdf-imposer.js"></script>
   </head>
 
   <body>
