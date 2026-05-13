@@ -376,7 +376,7 @@
 
       const a = $('.pdfimposer__btn--download', root);
       a.href = state.outputUrl;
-      a.download = 'imposed-cut-and-stack.pdf';
+      a.download = 'rearranged.pdf';
       $('.pdfimposer__download-row', root).removeAttribute('hidden');
 
       setStatus(root, `Done! ${state.imposed.length} pages in output PDF.`, false);
