@@ -2,53 +2,86 @@
  * pdf-imposer.js
  * Cut-and-Stack PDF Imposer — fully client-side, no framework.
  *
- * Imposition algorithm (plain English):
- * ─────────────────────────────────────
- * Goal: produce a PDF whose page order, when printed duplex
- *   (2-up, landscape, flip-on-short-edge) and then cut down
- *   the vertical centre, yields two stacks that read 1,2,3,…
- *   when the left stack is placed on top of the right stack.
+ * ═══════════════════════════════════════════════════════════════
+ * IMPOSITION ALGORITHM
+ * ═══════════════════════════════════════════════════════════════
+ *
+ * Goal
+ * ────
+ * Produce a PDF whose page order, when printed with:
+ *   • Duplex
+ *   • 2 pages per side (2-up)
+ *   • Landscape orientation
+ *   • "Flip on short edge"
+ * and then cut vertically down the centre of every sheet and
+ * stacked (all left halves first, then all right halves),
+ * reads naturally: 1, 2, 3, 4, 5, …
  *
  * Step 1 – Pad to even count
- *   If N is odd, append one blank page so N becomes even.
+ * ──────────────────────────
+ * If the original page count N is odd, append one blank page so
+ * N becomes even.  (For perfect duplex with no wasted half-sheets
+ * you ideally want N divisible by 4; we pad blanks silently.)
  *
- * Step 2 – Split
- *   left_stack  = pages 1 … N/2
- *   right_stack = pages N/2+1 … N
+ * Step 2 – Define the two stacks
+ * ────────────────────────────────
+ *   left_stack  = pages  1  …  N/2        (indices 0 … N/2−1)
+ *   right_stack = pages  N/2+1  …  N      (indices N/2 … N−1)
  *
- * Step 3 – Pair
- *   Each physical sheet carries two logical pages side-by-side.
- *   After cutting:
- *     • left half of sheet k  →  left_stack[k]   = page k
- *     • right half of sheet k →  right_stack[k]  = page N/2+k
- *   So sheet k should be printed as: (page k) | (page N/2+k)
+ * Step 3 – Understand the physical result
+ * ────────────────────────────────────────
+ * The printer consumes PDF pages sequentially and places them
+ * two-per-sheet-side, left slot then right slot:
  *
- * Step 4 – Duplex / flip-on-short-edge back sides
- *   With "flip on short edge", the back of sheet k is already
- *   correctly oriented when the sheet is flipped over its short
- *   (top/bottom) edge.  In 2-up landscape the two pages on the
- *   back need to be placed so that, after flipping, they appear
- *   right-way-up.  For portrait source pages that means the back
- *   side is simply: (page k+half) | (page N/2+k+half) where
- *   "half" = N/2 sheets printed per side.
- *
- *   Concretely, the imposed PDF's page sequence is:
- *
- *   Sheet 1 front  → src page  1         | src page  (N/2)+1
- *   Sheet 1 back   → src page  (N/4)+1   | src page  (3N/4)+1
- *   Sheet 2 front  → src page  2         | src page  (N/2)+2
- *   Sheet 2 back   → src page  (N/4)+2   | src page  (3N/4)+2
+ *   PDF pages 1,2  → Sheet 1 Front  left=PDF-p1   right=PDF-p2
+ *   PDF pages 3,4  → Sheet 1 Back   left=PDF-p3   right=PDF-p4
+ *   PDF pages 5,6  → Sheet 2 Front  left=PDF-p5   right=PDF-p6
+ *   PDF pages 7,8  → Sheet 2 Back   left=PDF-p7   right=PDF-p8
  *   …
  *
- *   But we do NOT physically combine pages side-by-side in the
- *   PDF; instead we output them as individual portrait pages in
- *   the correct order and instruct the user to print "2-up
- *   landscape".  That way vector quality is fully preserved and
- *   we never need to know the page dimensions to tile them.
+ * After cutting every sheet down the centre and stacking:
+ *   Left  pile order: Sheet1-Front-L, Sheet1-Back-L,
+ *                     Sheet2-Front-L, Sheet2-Back-L, …
+ *   Right pile order: Sheet1-Front-R, Sheet1-Back-R,
+ *                     Sheet2-Front-R, Sheet2-Back-R, …
+ *   Final order (left pile on top): all lefts then all rights.
  *
+ * Step 4 – Assign source pages to slots
+ * ──────────────────────────────────────
+ * We want final order = 1, 2, 3, …, N.
+ *
+ *   Left  pile position k (0-based) must hold source page k+1
+ *   Right pile position k (0-based) must hold source page N/2+k+1
+ *
+ * Left pile position k maps to PDF output page:
+ *   Sheet ⌊k/2⌋, side (k%2==0 ? Front : Back), Left slot
+ *   → PDF page index = k*2   (because each sheet-side = 2 PDF pages,
+ *                              and left slot is always the first of the pair)
+ *   → PDF page index for left slot of pile-position k = 2k
+ *
+ * Right slot is always the immediately following PDF page:
+ *   → PDF page index for right slot of pile-position k = 2k+1
+ *
+ * So the imposed PDF sequence is simply:
+ *
+ *   PDF slot 2k   ← source page  k+1         (= left_stack[k])
+ *   PDF slot 2k+1 ← source page  N/2+k+1     (= right_stack[k])
+ *
+ * Written out:
+ *   PDF: [ 1, N/2+1,  2, N/2+2,  3, N/2+3,  4, N/2+4, … ]
+ *         └──────┘   └──────┘   └──────┘
+ *         Sheet1-F   Sheet1-B   Sheet2-F   (each pair = one sheet side)
+ *
+ * This is the ONLY ordering needed. The printer and the duplex
+ * mechanism handle everything else automatically.
+ *
+ * No page rotation is required — pages remain upright throughout.
+ *
+ * ═══════════════════════════════════════════════════════════════
  * Dependencies (loaded via CDN script tags):
  *   • pdf-lib  →  PDFLib  global
- *   • pdf.js   →  pdfjsLib global  (preview only)
+ *   • pdf.js   →  pdfjsLib global  (preview only, optional)
+ * ═══════════════════════════════════════════════════════════════
  */
 
 (function () {
@@ -79,81 +112,57 @@
      IMPOSITION MATHS
      ───────────────────────────────────────────────────────────── */
 
-  /**
-   * computeImposition(n)
-   * Given an (already-even) page count n, return the sequence of
-   * 0-based page indices that should appear in the output PDF.
-   *
-   * The output sequence is ordered so that printing as
-   *   duplex / 2-up landscape / flip-on-short-edge
-   * and then cutting + stacking yields pages 0…n-1 in order.
-   *
-   * Layout per printed sheet (landscape, 2-up):
-   *   Front:  [left_page]  [right_page]
-   *   Back :  [left_page2] [right_page2]   ← flip on short edge
-   *
-   * We output individual portrait pages; the printer's 2-up
-   * driver places them left-to-right across the sheet.
-   *
-   * Sequence for sheet s (0-based), out of S = n/2 sheets total:
-   *   Front slot 0  (left  half):  page  s
-   *   Front slot 1  (right half):  page  s + S          = s + n/2
-   *   Back  slot 0  (left  half):  page  s + S/2        = s + n/4
-   *   Back  slot 1  (right half):  page  s + S + S/2    = s + 3n/4
-   *
-   * This ensures:
-   *   After printing + cutting:
-   *     Left  stack sheet s front top    → page s
-   *     Right stack sheet s front top    → page s + n/2
-   *     Left  stack sheet s back  bottom → page s + n/4
-   *     Right stack sheet s back  bottom → page s + 3n/4
-   *   Stacking left-then-right gives 0 … n-1 in order.  ✓
-   *
-   * @param  {number} n  Must be divisible by 4 for perfect duplex.
-   *                     We pad to nearest multiple of 4 internally.
-   * @return {number[]}  Array of 0-based source page indices.
-   */
   function computeImposition(n) {
-    // Pad to multiple of 4 (two sheets on each side of the duplex)
+    // Pad to nearest multiple of 4 for clean duplex sheets.
+    // (2 pages per sheet side × 2 sides = 4 source pages per sheet)
     let N = n;
     while (N % 4 !== 0) N++;
 
-    const S = N / 2;   // total physical sheets
+    const half = N / 2;  // size of each stack (left / right)
     const imposed = [];
 
-    for (let s = 0; s < S / 2; s++) {
-      // Front side of sheet s
-      imposed.push(s);            // left  slot
-      imposed.push(s + S);       // right slot
-
-      // Back side of sheet s
-      imposed.push(s + S / 2);   // left  slot (flip on short edge)
-      imposed.push(s + S + S / 2); // right slot
+    // Interleave left_stack and right_stack so that:
+    //   PDF page 2k+1  ← left_stack[k]  = source page k+1
+    //   PDF page 2k+2  ← right_stack[k] = source page N/2+k+1
+    //
+    // For N=8: imposed = [0,4, 1,5, 2,6, 3,7]
+    //   Sheet 1 Front: pages 1,5  | Sheet 1 Back: pages 2,6
+    //   Sheet 2 Front: pages 3,7  | Sheet 2 Back: pages 4,8
+    //   Left  pile after cut: 1,2,3,4  ✓
+    //   Right pile after cut: 5,6,7,8  ✓
+    //   Combined (left on top): 1,2,3,4,5,6,7,8  ✓
+    for (let k = 0; k < half; k++) {
+      imposed.push(k);         // left slot  — PDF page 2k+1
+      imposed.push(k + half); // right slot — PDF page 2k+2
     }
 
-    // The imposed array now has N entries (indices 0…N-1).
-    // Any index >= original n is a blank placeholder.
+    // imposed.length === N
+    // Any index >= original n will be rendered as a blank page.
     return imposed;
   }
 
   /**
-   * humanReadableMapping(originalN, paddedN, imposed)
-   * Returns rows for the UI mapping table.
-   * Each row: { sheet, side, slot, imposedIdx, srcPage }
-   * srcPage is 1-based; null means blank.
+   * humanReadableMapping(originalN, imposed)
+   * Returns table rows for the UI.
+   *
+   * imposed is the interleaved array: [L0,R0, L1,R1, L2,R2, …]
+   * Each adjacent pair [2i, 2i+1] is one physical sheet side.
+   * Sides alternate Front / Back per sheet (every 2 pairs = 1 sheet).
+   *
+   * Row columns: Sheet | Side | Left half (src page) | Right half (src page)
    */
   function humanReadableMapping(originalN, imposed) {
     const rows = [];
-    const S = imposed.length / 2; // total (front+back) sides → /2 pairs
-
+    // Each pair of imposed indices = one sheet side (2 PDF pages)
     for (let i = 0; i < imposed.length; i += 2) {
-      const sheetIndex = Math.floor(i / 4);
-      const side = (Math.floor(i / 2) % 2 === 0) ? 'Front' : 'Back';
-      const leftIdx  = imposed[i];
-      const rightIdx = imposed[i + 1];
+      const sideIndex  = i / 2;                                  // 0-based side number
+      const sheetNum   = Math.floor(sideIndex / 2) + 1;          // 1-based sheet
+      const side       = sideIndex % 2 === 0 ? 'Front' : 'Back';
+      const leftIdx    = imposed[i];
+      const rightIdx   = imposed[i + 1];
 
       rows.push({
-        sheet: sheetIndex + 1,
+        sheet: sheetNum,
         side,
         left:  leftIdx  < originalN ? leftIdx  + 1 : '(blank)',
         right: rightIdx < originalN ? rightIdx + 1 : '(blank)',
