@@ -1,5 +1,5 @@
 /**
- * pdf-imposer.js
+ * pdf-saver.js
  * Cut-and-Stack PDF Imposer — fully client-side, no framework.
  *
  * ═══════════════════════════════════════════════════════════════
@@ -397,13 +397,13 @@
   function init() {
     const root = document.getElementById(ROOT_ID);
     if (!root) {
-      console.warn('[pdf-imposer] Root element #' + ROOT_ID + ' not found.');
+      console.warn('[pdf-saver] Root element #' + ROOT_ID + ' not found.');
       return;
     }
 
     // Check dependencies
     if (typeof PDFLib === 'undefined') {
-      console.error('[pdf-imposer] pdf-lib not loaded.');
+      console.error('[pdf-saver] pdf-lib not loaded.');
       showError(root, 'pdf-lib library failed to load. Check your script tags.');
       return;
     }

@@ -11,7 +11,7 @@
     />
 
     <link rel="stylesheet" href="style.css" />
-    <link rel="stylesheet" href="pdf-imposer.css" />
+    <link rel="stylesheet" href="pdf-saver.css" />
     <link rel="icon" href="favicon.ico" />
     <link
       href="https://fonts.googleapis.com/css2?family=JetBrains+Mono&display=swap"
@@ -21,7 +21,7 @@
     <!-- pdf-lib: PDF manipulation, no rasterisation -->
     <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
     <!-- The imposer module — must come after pdf-lib -->
-    <script src="pdf-imposer.js"></script>
+    <script src="pdf-saver.js"></script>
   </head>
 
   <body>
@@ -31,10 +31,8 @@
     </header>
 
     <main class="layout">
-
       <!-- LEFT COLUMN — back nav + tool info -->
       <aside class="left">
-
         <div class="side-card tools-nav-card">
           <div class="res-card-header">
             <span class="res-icon">←</span>
@@ -83,14 +81,14 @@
             </li>
           </ul>
         </div>
-
       </aside>
 
       <!-- RIGHT COLUMN — imposer tool -->
       <section class="right">
-
-        <div class="res-card res-card--full pdfimposer__card" id="pdfimposer-root">
-
+        <div
+          class="res-card res-card--full pdfimposer__card"
+          id="pdfimposer-root"
+        >
           <div class="res-card-header">
             <span class="res-icon">◈</span>
             <span class="res-category">Cut-and-Stack PDF Imposer</span>
@@ -98,13 +96,17 @@
 
           <p class="pdfimposer__subtitle">
             Rearranges pages so that printing duplex · 2-up landscape ·
-            flip-on-short-edge, then cutting and stacking, gives natural
-            reading order.
+            flip-on-short-edge, then cutting and stacking, gives natural reading
+            order.
           </p>
 
           <!-- Drop zone / file picker -->
-          <div class="pdfimposer__dropzone" role="button" tabindex="0"
-               aria-label="Upload a PDF file">
+          <div
+            class="pdfimposer__dropzone"
+            role="button"
+            tabindex="0"
+            aria-label="Upload a PDF file"
+          >
             <span class="pdfimposer__dropzone-icon">📂</span>
             <p>Drag &amp; drop a PDF here, or click to browse</p>
             <input type="file" accept="application/pdf" aria-hidden="true" />
@@ -124,7 +126,7 @@
 
           <!-- Status / spinner -->
           <div class="pdfimposer__status" hidden>
-            <span class="pdfimposer__spinner" style="display:none"></span>
+            <span class="pdfimposer__spinner" style="display: none"></span>
             <span>&nbsp;</span>
           </div>
 
@@ -137,9 +139,9 @@
           <!-- Mapping table (shown when checkbox ticked) -->
           <div class="pdfimposer__mapping-wrap" hidden>
             <h3>Page Mapping</h3>
-            <p style="font-size:0.78em;color:#999;margin:0 0 0.4em;">
-              Each row = one physical sheet side.
-              Left / Right = page numbers visible after cutting vertically.
+            <p style="font-size: 0.78em; color: #999; margin: 0 0 0.4em">
+              Each row = one physical sheet side. Left / Right = page numbers
+              visible after cutting vertically.
             </p>
             <table class="pdfimposer__table">
               <thead>
@@ -158,21 +160,20 @@
           <div>
             <button
               class="pdfimposer__btn pdfimposer__btn--primary pdfimposer__btn--generate"
-              disabled>
+              disabled
+            >
               ⚙ Generate Imposed PDF
             </button>
           </div>
 
           <!-- Download -->
           <div class="pdfimposer__download-row" hidden>
-            <a class="pdfimposer__btn pdfimposer__btn--download"
-               download>
+            <a class="pdfimposer__btn pdfimposer__btn--download" download>
               ↓ Download
             </a>
           </div>
-
-        </div><!-- /#pdfimposer-root -->
-
+        </div>
+        <!-- /#pdfimposer-root -->
       </section>
     </main>
 
