@@ -1,17 +1,38 @@
 /* ============================================================
-   Cut-and-Stack PDF Imposer — Additional Stylesheet
-   Scoped to .pdfimposer__ prefix; zero conflicts with host page.
-
-   Design matches the existing site:
-     - JetBrains Mono / monospace stack (inherited from body)
-     - 14px base, #111 on #f5f5f3
-     - 1px solid #ccc borders, #fff card backgrounds
-     - No border-radius, no shadows, no colour accents
-     - Dotted separators, uppercase labels, tight spacing
+   pdf-imposer.css
+   Two responsibilities:
+     1. Tools tab activation rule (extends style.css tab system)
+     2. Cut-and-Stack PDF Imposer widget styles
+   Scoped to .pdfimposer__ prefix — zero conflicts with host CSS.
    ============================================================ */
 
-/* ── Section heading ───────────────────────────────────────── */
-/* Reuses site h2 styles; only overrides where necessary */
+
+/* ── 1. Tools tab activation ───────────────────────────────────
+   Mirrors the existing pattern in style.css for the other tabs.
+   Must live here (not style.css) so the file stays self-contained.
+   ──────────────────────────────────────────────────────────── */
+
+#tab-tools:checked ~ .tabs label[for="tab-tools"] {
+  color: #111;
+  border-bottom: 2px solid #111;
+}
+
+#tab-tools:checked ~ #content-area #tools-content {
+  display: block;
+}
+
+
+/* ── 2. PDF Imposer widget ─────────────────────────────────────
+   Design language from style.css:
+     • JetBrains Mono inherited from body
+     • 14px / #111 on #f5f5f3
+     • 1px solid #ccc borders, #fff backgrounds
+     • No border-radius, no shadows, no colour accents
+     • Dotted dividers, tight em-based spacing
+     • Uppercase small labels, #003399 for links
+   ──────────────────────────────────────────────────────────── */
+
+/* Section heading — reuses site h2 exactly */
 .pdfimposer__section > h2 {
   font-size: 1em;
   font-weight: normal;
@@ -26,7 +47,7 @@
   line-height: 1.5;
 }
 
-/* ── Drop zone ─────────────────────────────────────────────── */
+/* Drop zone */
 .pdfimposer__dropzone {
   border: 1px dashed #bbb;
   background: #fff;
@@ -67,7 +88,7 @@
   color: #666;
 }
 
-/* ── Options ───────────────────────────────────────────────── */
+/* Options checkboxes */
 .pdfimposer__options {
   margin-top: 0.45em;
   display: flex;
@@ -84,7 +105,7 @@
   cursor: pointer;
 }
 
-/* ── Status bar ────────────────────────────────────────────── */
+/* Status bar */
 .pdfimposer__status {
   margin-top: 0.4em;
   font-size: 0.8em;
@@ -97,7 +118,7 @@
 
 .pdfimposer__status[hidden] { display: none; }
 
-/* ── Spinner ───────────────────────────────────────────────── */
+/* Spinner — minimal, 1px border like the site's dotted dividers */
 .pdfimposer__spinner {
   display: inline-block;
   width: 0.8em;
@@ -113,7 +134,7 @@
   to { transform: rotate(360deg); }
 }
 
-/* ── Error notice ──────────────────────────────────────────── */
+/* Error notice — plain bordered box, no colour */
 .pdfimposer__error {
   margin-top: 0.4em;
   font-size: 0.8em;
@@ -126,7 +147,7 @@
 
 .pdfimposer__error[hidden] { display: none; }
 
-/* ── Info card ─────────────────────────────────────────────── */
+/* Info card — matches .res-card feel */
 .pdfimposer__info {
   margin-top: 0.5em;
   padding: 0.35em 0.65em;
@@ -139,7 +160,7 @@
 
 .pdfimposer__info[hidden] { display: none; }
 
-/* ── Mapping table ─────────────────────────────────────────── */
+/* Mapping table wrapper */
 .pdfimposer__mapping-wrap {
   margin-top: 0.65em;
   overflow-x: auto;
@@ -158,6 +179,7 @@
   padding-bottom: 0.18em;
 }
 
+/* Mapping table — mirrors .res-list / .side-timeline density */
 .pdfimposer__table {
   width: 100%;
   border-collapse: collapse;
@@ -185,15 +207,13 @@
   background: #fafafa;
 }
 
-/* ── Buttons ───────────────────────────────────────────────── */
-/* Flat, bordered — same visual language as .side-card:hover */
+/* Buttons — flat bordered, same hover as .side-card / .res-card */
 .pdfimposer__btn {
   margin-top: 0.55em;
   display: inline-block;
   padding: 0.25em 0.75em;
   border: 1px solid #bbb;
   background: #fff;
-  color: #003399;           /* matches site link colour */
   font-family: inherit;
   font-size: 0.82em;
   cursor: pointer;
@@ -213,24 +233,75 @@
   border-color: #ccc;
 }
 
+/* Generate = plain text action */
 .pdfimposer__btn--primary {
-  color: #111;              /* generate: plain text, not link-blue */
+  color: #111;
 }
 
+/* Download = link colour, same as <a> in site */
 .pdfimposer__btn--download {
   color: #003399;
 }
 
-/* ── Download row ──────────────────────────────────────────── */
+/* Download row */
 .pdfimposer__download-row {
   margin-top: 0.15em;
 }
 
 .pdfimposer__download-row[hidden] { display: none; }
 
-/* ── Mobile ────────────────────────────────────────────────── */
+
+/* ── 3. tools.html standalone page layout ──────────────────────
+   The imposer page reuses .layout / .left / .right from style.css.
+   This block only adds what's needed for the back-link card and
+   ensures the imposer card fills the right column cleanly.
+   ──────────────────────────────────────────────────────────── */
+
+/* Back-navigation card in the left sidebar on tools.html */
+.tools-nav-card {
+  border: 1px solid #ccc;
+  background: #fff;
+  padding: 0.5em 0.65em;
+}
+
+.tools-nav-card:hover {
+  border-color: #888;
+}
+
+.tools-nav-card a {
+  font-size: 0.82em;
+  color: #003399;
+  display: block;
+}
+
+/* The imposer lives directly inside .right on tools.html,
+   so we need the card wrapper to behave like a res-card */
+.pdfimposer__card {
+  border: 1px solid #ccc;
+  background: #fff;
+  padding: 0.55em 0.7em;
+}
+
+
+/* ── 4. Responsive — mobile ≤ 700px ───────────────────────────
+   Mirrors style.css @media (max-width: 700px) behaviour exactly.
+   The imposer widget itself needs no special reflow — it already
+   uses block-level elements and percent widths. The only fix is
+   the dropzone padding and ensuring the table scrolls horizontally
+   rather than overflowing on small screens.
+   ──────────────────────────────────────────────────────────── */
+
 @media (max-width: 700px) {
   .pdfimposer__dropzone {
     padding: 1em 0.75em;
+  }
+
+  /* Table: horizontal scroll on very small viewports */
+  .pdfimposer__mapping-wrap {
+    width: 100%;
+  }
+
+  .pdfimposer__table {
+    min-width: 360px; /* prevent column collapse; wrapper scrolls */
   }
 }
