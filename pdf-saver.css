@@ -1,46 +1,46 @@
 /* ============================================================
    Cut-and-Stack PDF Imposer — Additional Stylesheet
-   Integrates with existing site styles.
-   Scope: all rules are prefixed with .pdfimposer__ to avoid
-   conflicts with whatever CSS the host page already defines.
+   Scoped to .pdfimposer__ prefix; zero conflicts with host page.
+
+   Design matches the existing site:
+     - JetBrains Mono / monospace stack (inherited from body)
+     - 14px base, #111 on #f5f5f3
+     - 1px solid #ccc borders, #fff card backgrounds
+     - No border-radius, no shadows, no colour accents
+     - Dotted separators, uppercase labels, tight spacing
    ============================================================ */
 
-/* ── Section wrapper ───────────────────────────────────────── */
-.pdfimposer__section {
-  padding: 3rem 1.5rem;
-  max-width: 860px;
-  margin: 0 auto;
+/* ── Section heading ───────────────────────────────────────── */
+/* Reuses site h2 styles; only overrides where necessary */
+.pdfimposer__section > h2 {
+  font-size: 1em;
+  font-weight: normal;
+  border-bottom: 1px solid #ccc;
+  margin: 0.8em 0 0.3em;
 }
 
-.pdfimposer__section h2 {
-  font-size: 1.75rem;
-  margin-bottom: 0.35rem;
-}
-
-.pdfimposer__section .pdfimposer__subtitle {
-  opacity: 0.65;
-  margin-bottom: 2rem;
-  font-size: 0.95rem;
+.pdfimposer__subtitle {
+  font-size: 0.8em;
+  color: #777;
+  margin: 0 0 0.65em;
   line-height: 1.5;
 }
 
 /* ── Drop zone ─────────────────────────────────────────────── */
 .pdfimposer__dropzone {
-  border: 2.5px dashed currentColor;
-  border-radius: 10px;
-  padding: 3rem 2rem;
+  border: 1px dashed #bbb;
+  background: #fff;
+  padding: 1.2em 1em;
   text-align: center;
   cursor: pointer;
-  opacity: 0.55;
-  transition: opacity 0.2s, background 0.2s;
   position: relative;
   user-select: none;
+  transition: border-color 0.15s;
 }
 
 .pdfimposer__dropzone:hover,
 .pdfimposer__dropzone.pdfimposer--drag-over {
-  opacity: 1;
-  background: rgba(128,128,128,0.07);
+  border-color: #888;
 }
 
 .pdfimposer__dropzone input[type="file"] {
@@ -53,25 +53,46 @@
 }
 
 .pdfimposer__dropzone-icon {
-  font-size: 2.5rem;
+  font-size: 1em;
   display: block;
-  margin-bottom: 0.6rem;
+  margin-bottom: 0.25em;
   pointer-events: none;
+  color: #999;
 }
 
 .pdfimposer__dropzone p {
   margin: 0;
   pointer-events: none;
+  font-size: 0.82em;
+  color: #666;
+}
+
+/* ── Options ───────────────────────────────────────────────── */
+.pdfimposer__options {
+  margin-top: 0.45em;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.7em;
+}
+
+.pdfimposer__options label {
+  display: flex;
+  align-items: center;
+  gap: 0.3em;
+  font-size: 0.82em;
+  color: #444;
+  cursor: pointer;
 }
 
 /* ── Status bar ────────────────────────────────────────────── */
 .pdfimposer__status {
-  margin-top: 1.2rem;
-  font-size: 0.9rem;
-  min-height: 1.4em;
+  margin-top: 0.4em;
+  font-size: 0.8em;
+  color: #666;
   display: flex;
   align-items: center;
-  gap: 0.55rem;
+  gap: 0.4em;
+  min-height: 1.3em;
 }
 
 .pdfimposer__status[hidden] { display: none; }
@@ -79,12 +100,12 @@
 /* ── Spinner ───────────────────────────────────────────────── */
 .pdfimposer__spinner {
   display: inline-block;
-  width: 1em;
-  height: 1em;
-  border: 2px solid currentColor;
+  width: 0.8em;
+  height: 0.8em;
+  border: 1px solid #999;
   border-top-color: transparent;
   border-radius: 50%;
-  animation: pdfimposer-spin 0.7s linear infinite;
+  animation: pdfimposer-spin 0.8s linear infinite;
   flex-shrink: 0;
 }
 
@@ -92,132 +113,124 @@
   to { transform: rotate(360deg); }
 }
 
-/* ── Options bar ───────────────────────────────────────────── */
-.pdfimposer__options {
-  margin-top: 1.4rem;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
+/* ── Error notice ──────────────────────────────────────────── */
+.pdfimposer__error {
+  margin-top: 0.4em;
+  font-size: 0.8em;
+  color: #111;
+  border: 1px solid #ccc;
+  border-left: 2px solid #888;
+  background: #fff;
+  padding: 0.3em 0.6em;
 }
 
-.pdfimposer__options label {
-  display: flex;
-  align-items: center;
-  gap: 0.4rem;
-  font-size: 0.9rem;
-  cursor: pointer;
-}
+.pdfimposer__error[hidden] { display: none; }
 
 /* ── Info card ─────────────────────────────────────────────── */
 .pdfimposer__info {
-  margin-top: 1.6rem;
-  padding: 1rem 1.2rem;
-  border-radius: 8px;
-  font-size: 0.9rem;
-  background: rgba(128,128,128,0.08);
-  border-left: 3px solid currentColor;
-  opacity: 0.9;
+  margin-top: 0.5em;
+  padding: 0.35em 0.65em;
+  border: 1px solid #ccc;
+  background: #fff;
+  font-size: 0.8em;
+  color: #444;
+  line-height: 1.6;
 }
 
 .pdfimposer__info[hidden] { display: none; }
 
 /* ── Mapping table ─────────────────────────────────────────── */
 .pdfimposer__mapping-wrap {
-  margin-top: 1.6rem;
+  margin-top: 0.65em;
   overflow-x: auto;
 }
 
 .pdfimposer__mapping-wrap[hidden] { display: none; }
 
 .pdfimposer__mapping-wrap h3 {
-  font-size: 1rem;
-  margin-bottom: 0.6rem;
+  font-size: 0.75em;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #666;
+  margin: 0 0 0.3em;
+  border-bottom: 1px dotted #e0e0e0;
+  padding-bottom: 0.18em;
 }
 
 .pdfimposer__table {
   width: 100%;
   border-collapse: collapse;
-  font-size: 0.82rem;
+  font-size: 0.8em;
 }
 
 .pdfimposer__table th,
 .pdfimposer__table td {
-  padding: 0.4rem 0.75rem;
-  border: 1px solid rgba(128,128,128,0.25);
+  padding: 0.2em 0.55em;
+  border: 1px solid #ddd;
   text-align: center;
+  color: #222;
 }
 
 .pdfimposer__table th {
-  background: rgba(128,128,128,0.12);
-  font-weight: 600;
+  background: #f0f0f0;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-size: 0.88em;
+  color: #555;
 }
 
 .pdfimposer__table tr:nth-child(even) td {
-  background: rgba(128,128,128,0.05);
+  background: #fafafa;
 }
 
-/* ── Action button ─────────────────────────────────────────── */
+/* ── Buttons ───────────────────────────────────────────────── */
+/* Flat, bordered — same visual language as .side-card:hover */
 .pdfimposer__btn {
-  margin-top: 1.8rem;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.65rem 1.5rem;
-  border-radius: 6px;
-  border: none;
+  margin-top: 0.55em;
+  display: inline-block;
+  padding: 0.25em 0.75em;
+  border: 1px solid #bbb;
+  background: #fff;
+  color: #003399;           /* matches site link colour */
+  font-family: inherit;
+  font-size: 0.82em;
   cursor: pointer;
-  font-size: 0.95rem;
-  font-weight: 600;
-  letter-spacing: 0.01em;
-  transition: filter 0.15s, transform 0.1s;
+  text-decoration: none;
+  transition: border-color 0.15s;
 }
 
-.pdfimposer__btn:hover { filter: brightness(1.1); }
-.pdfimposer__btn:active { transform: scale(0.97); }
+.pdfimposer__btn:hover {
+  border-color: #888;
+  text-decoration: none;
+}
+
 .pdfimposer__btn:disabled {
-  opacity: 0.45;
+  opacity: 0.38;
   cursor: not-allowed;
-  filter: none;
-  transform: none;
+  color: #888;
+  border-color: #ccc;
 }
 
-/* Use site's primary colour via variable, fall back to a neutral */
 .pdfimposer__btn--primary {
-  background: var(--accent, var(--primary, #3b82f6));
-  color: var(--accent-fg, #fff);
+  color: #111;              /* generate: plain text, not link-blue */
 }
 
 .pdfimposer__btn--download {
-  background: var(--success, #16a34a);
-  color: #fff;
+  color: #003399;
 }
-
-/* ── Error notice ──────────────────────────────────────────── */
-.pdfimposer__error {
-  margin-top: 1rem;
-  padding: 0.75rem 1rem;
-  border-radius: 6px;
-  background: rgba(220,38,38,0.1);
-  border-left: 3px solid #dc2626;
-  color: #b91c1c;
-  font-size: 0.88rem;
-}
-
-.pdfimposer__error[hidden] { display: none; }
 
 /* ── Download row ──────────────────────────────────────────── */
 .pdfimposer__download-row {
-  margin-top: 1rem;
+  margin-top: 0.15em;
 }
 
 .pdfimposer__download-row[hidden] { display: none; }
 
-/* ── Responsive tweaks ─────────────────────────────────────── */
-@media (max-width: 520px) {
-  .pdfimposer__section {
-    padding: 2rem 1rem;
-  }
+/* ── Mobile ────────────────────────────────────────────────── */
+@media (max-width: 700px) {
   .pdfimposer__dropzone {
-    padding: 2rem 1rem;
+    padding: 1em 0.75em;
   }
 }
