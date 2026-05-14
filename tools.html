@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Tools — Sayantan Biswas</title>
+    <meta name="author" content="Sayantan Biswas" />
+    <meta
+      name="description"
+      content="Browser-based PDF utilities — Cut-and-Stack PDF Imposer for duplex booklet printing."
+    />
+
+    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="pdf-imposer.css" />
+    <link rel="icon" href="favicon.ico" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- pdf-lib: PDF manipulation, no rasterisation -->
+    <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
+    <!-- The imposer module — must come after pdf-lib -->
+    <script src="pdf-imposer.js"></script>
+  </head>
+
+  <body>
+    <header class="top">
+      <h1>Sayantan Biswas</h1>
+      <p class="subtitle">Graphs · Causality · ML</p>
+    </header>
+
+    <main class="layout">
+
+      <!-- LEFT COLUMN — back nav + tool info -->
+      <aside class="left">
+
+        <div class="side-card tools-nav-card">
+          <div class="res-card-header">
+            <span class="res-icon">←</span>
+            <span class="res-category">Nav</span>
+          </div>
+          <ul class="side-links">
+            <li><a href="index.html">← Back to home</a></li>
+          </ul>
+        </div>
+
+        <div class="side-card">
+          <div class="res-card-header">
+            <span class="res-icon">⚙</span>
+            <span class="res-category">About</span>
+          </div>
+          <p class="side-body">
+            Runs entirely in your browser. No file is uploaded anywhere.
+          </p>
+        </div>
+
+        <div class="side-card">
+          <div class="res-card-header">
+            <span class="res-icon">◎</span>
+            <span class="res-category">How to print</span>
+          </div>
+          <ul class="side-timeline">
+            <li>
+              <span class="tl-year">1.</span>
+              <span class="tl-desc">Upload PDF, download rearranged file</span>
+            </li>
+            <li>
+              <span class="tl-year">2.</span>
+              <span class="tl-desc">Print: duplex, 2-up, landscape</span>
+            </li>
+            <li>
+              <span class="tl-year">3.</span>
+              <span class="tl-desc">Flip on short edge</span>
+            </li>
+            <li>
+              <span class="tl-year">4.</span>
+              <span class="tl-desc">Cut each sheet vertically</span>
+            </li>
+            <li>
+              <span class="tl-year">5.</span>
+              <span class="tl-desc">Stack: left halves, then right halves</span>
+            </li>
+          </ul>
+        </div>
+
+      </aside>
+
+      <!-- RIGHT COLUMN — imposer tool -->
+      <section class="right">
+
+        <div class="res-card res-card--full pdfimposer__card" id="pdfimposer-root">
+
+          <div class="res-card-header">
+            <span class="res-icon">◈</span>
+            <span class="res-category">Cut-and-Stack PDF Imposer</span>
+          </div>
+
+          <p class="pdfimposer__subtitle">
+            Rearranges pages so that printing duplex · 2-up landscape ·
+            flip-on-short-edge, then cutting and stacking, gives natural
+            reading order.
+          </p>
+
+          <!-- Drop zone / file picker -->
+          <div class="pdfimposer__dropzone" role="button" tabindex="0"
+               aria-label="Upload a PDF file">
+            <span class="pdfimposer__dropzone-icon">📂</span>
+            <p>Drag &amp; drop a PDF here, or click to browse</p>
+            <input type="file" accept="application/pdf" aria-hidden="true" />
+          </div>
+
+          <!-- Options -->
+          <div class="pdfimposer__options">
+            <label>
+              <input type="checkbox" class="pdfimposer__opt-blank" checked />
+              Add blank page if page count is odd
+            </label>
+            <label>
+              <input type="checkbox" class="pdfimposer__opt-mapping" />
+              Show page-mapping table
+            </label>
+          </div>
+
+          <!-- Status / spinner -->
+          <div class="pdfimposer__status" hidden>
+            <span class="pdfimposer__spinner" style="display:none"></span>
+            <span>&nbsp;</span>
+          </div>
+
+          <!-- Error notice -->
+          <div class="pdfimposer__error" hidden role="alert"></div>
+
+          <!-- Info card (populated by JS after file load) -->
+          <div class="pdfimposer__info" hidden></div>
+
+          <!-- Mapping table (shown when checkbox ticked) -->
+          <div class="pdfimposer__mapping-wrap" hidden>
+            <h3>Page Mapping</h3>
+            <p style="font-size:0.78em;color:#999;margin:0 0 0.4em;">
+              Each row = one physical sheet side.
+              Left / Right = page numbers visible after cutting vertically.
+            </p>
+            <table class="pdfimposer__table">
+              <thead>
+                <tr>
+                  <th>Sheet</th>
+                  <th>Side</th>
+                  <th>Left half</th>
+                  <th>Right half</th>
+                </tr>
+              </thead>
+              <tbody></tbody>
+            </table>
+          </div>
+
+          <!-- Generate button -->
+          <div>
+            <button
+              class="pdfimposer__btn pdfimposer__btn--primary pdfimposer__btn--generate"
+              disabled>
+              ⚙ Generate Imposed PDF
+            </button>
+          </div>
+
+          <!-- Download -->
+          <div class="pdfimposer__download-row" hidden>
+            <a class="pdfimposer__btn pdfimposer__btn--download"
+               download>
+              ↓ Download
+            </a>
+          </div>
+
+        </div><!-- /#pdfimposer-root -->
+
+      </section>
+    </main>
+
+    <footer>© 2026 Sayantan Biswas</footer>
+  </body>
+</html>
