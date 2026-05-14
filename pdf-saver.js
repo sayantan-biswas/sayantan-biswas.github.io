@@ -376,7 +376,9 @@
 
       const a = $('.pdfimposer__btn--download', root);
       a.href = state.outputUrl;
-      a.download = 'rearranged.pdf';
+      const origName = (state.file && state.file.name) || 'output.pdf';
+      const baseName = origName.replace(/\.pdf$/i, '');
+      a.download = baseName + '_rearranged.pdf';
       $('.pdfimposer__download-row', root).removeAttribute('hidden');
 
       setStatus(root, `Done! ${state.imposed.length} pages in output PDF.`, false);
