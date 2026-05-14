@@ -30,7 +30,7 @@
       href="https://fonts.googleapis.com/css2?family=JetBrains+Mono&display=swap"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="pdf-imposer.css" />
+
     <!-- KaTeX -->
     <link
       rel="stylesheet"
@@ -52,23 +52,6 @@
         })
       "
     ></script>
-
-    <!--
-  pdf-lib: PDF creation / manipulation (no rasterisation).
-  Using the UMD build so PDFLib is available as a global.
--->
-    <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js"></script>
-
-    <!--
-  pdf.js: only needed if you want in-page page-preview thumbnails.
-  The imposer itself does NOT require pdf.js — leave these out if
-  you don't need previews and want a leaner page.
--->
-    <!-- <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js"></script> -->
-    <!-- <script>pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';</script> -->
-
-    <!-- The imposer module — must come after pdf-lib -->
-    <script src="pdf-imposer.js"></script>
   </head>
 
   <body>
@@ -131,16 +114,18 @@
 
       <!-- RIGHT COLUMN -->
       <section class="right">
-        <!-- Hidden radio inputs for tab state -->
+        <!-- Hidden radio inputs for tab state — now includes Tools -->
         <input type="radio" name="tabs" id="tab-research" checked />
         <input type="radio" name="tabs" id="tab-blogs" />
         <input type="radio" name="tabs" id="tab-resources" />
+        <input type="radio" name="tabs" id="tab-tools" />
 
         <!-- Tab Navigation -->
         <nav class="tabs">
           <label for="tab-research" class="tab-link">Research</label>
           <label for="tab-blogs" class="tab-link">Blogs</label>
           <label for="tab-resources" class="tab-link">Resources</label>
+          <label for="tab-tools" class="tab-link">Tools</label>
         </nav>
 
         <!-- Tab Content Container -->
@@ -186,6 +171,7 @@
               </ul>
             </div>
           </div>
+
           <!-- Resources Tab -->
           <div id="resources-content" class="tab-content">
             <div class="resources-grid">
@@ -362,15 +348,37 @@
                       Convex Optimization
                     </a>
                     <span class="res-meta"
-                      >Boyd &amp; Vandenberghe — Stanford
-                      https://www.desmos.com/calculator/nk6gtkx9cm
-                    </span>
+                      >Boyd &amp; Vandenberghe — Stanford</span
+                    >
                   </li>
                 </ul>
               </div>
             </div>
           </div>
-        </div>
+
+          <!-- Tools Tab -->
+          <div id="tools-content" class="tab-content">
+            <div class="res-card res-card--full">
+              <div class="res-card-header">
+                <span class="res-icon">⚙</span>
+                <span class="res-category">PDF Utilities</span>
+                <span class="res-count">1</span>
+              </div>
+              <ul class="res-list">
+                <li>
+                  <a href="tools.html">Cut-and-Stack PDF Imposer</a>
+                  <span class="res-meta">client-side · no upload · no server</span>
+                  <span class="res-abstract">
+                    Rearranges PDF pages for duplex 2-up landscape printing.
+                    Cut each printed sheet vertically, stack left then right —
+                    pages read in natural order.
+                  </span>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+        </div><!-- /#content-area -->
       </section>
     </main>
 
